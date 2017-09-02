@@ -11,11 +11,15 @@ import java.util.Random;
 public class jokesSourceClass {
 
 
-    public static String getJoke() {
-        return executePost("http://localhost:8080/_ah/api/myApi/v1/sayHi/tell a joke");
+    public static void getJoke(final JokeCallback call) {
+        new Thread(new Runnable() {
+            public void run() {
+                executePost(call,"http://192.168.1.102:8080/_ah/api/myApi/v1/sayHi/tell a joke");
+            }
+        }).start();
     }
 
-    private static String executePost(String targetURL) {
+    private static void executePost(JokeCallback call, String targetURL) {
         HttpURLConnection connection = null;
 
         try {
@@ -35,10 +39,10 @@ public class jokesSourceClass {
                 response.append('\r');
             }
             rd.close();
-            return response.toString();
+            call.returnLatestJoke(response.toString());
         } catch (Exception e) {
             e.printStackTrace();
-            return null;
+            call.returnLatestJoke("");
         } finally {
             if (connection != null) {
                 connection.disconnect();
