@@ -8,6 +8,7 @@ import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.JokeCallback;
 import com.example.jokesSourceClass;
@@ -51,8 +52,8 @@ public class MainActivity extends AppCompatActivity {
     // This complicated approach was adopted because the step 3 in Instruction of the project said that the joke source library (Java library) should be pulling the jokes from the endpoint.
     // Java has no async task.
     // Also, we had to push the response back to the UI thread.
-    public void tellJoke(View view) {
-        JokeCallback newJokeCallback = new JokeCallback() {
+    public void tellJoke(final View view) {
+        final JokeCallback newJokeCallback = new JokeCallback() {
             @Override
             public void returnLatestJoke(final String jokeobj) {
 
@@ -73,6 +74,10 @@ public class MainActivity extends AppCompatActivity {
                             tellingJoke(finalJoke);
                         }
                     });
+                }
+                else
+                {
+                    Toast.makeText(view.getContext(),R.string.no_internet,Toast.LENGTH_LONG).show();
                 }
             }
         };

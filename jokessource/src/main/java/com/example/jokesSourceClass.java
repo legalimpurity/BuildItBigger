@@ -14,7 +14,7 @@ public class jokesSourceClass {
     public static void getJoke(final JokeCallback call) {
         new Thread(new Runnable() {
             public void run() {
-                executePost(call,"http://192.168.1.102:8080/_ah/api/myApi/v1/sayHi/tell a joke");
+                executePost(call,"http://192.168.0.3:8080/_ah/api/myApi/v1/sayHi/tell a joke");
             }
         }).start();
     }
